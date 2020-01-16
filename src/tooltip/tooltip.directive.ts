@@ -88,6 +88,11 @@ export class TooltipDirective implements OnInit, OnDestroy {
   @Input() delay: number;
 
   /**
+   * Delay before showing the tooltip
+   */
+  @Input() hideAfterDelay: number;
+
+  /**
    * Emits an event when the tooltip is shown
    */
   /* tslint:disable-next-line:no-any */
@@ -320,6 +325,13 @@ export class TooltipDirective implements OnInit, OnDestroy {
       }
     } else {
       showTooltip();
+    }
+
+    if (this.hideAfterDelay) {
+      showTooltip();
+      timer(this.hideAfterDelay).subscribe(() => {
+       this.hide();
+      });
     }
   }
 
